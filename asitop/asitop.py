@@ -3,6 +3,7 @@ import time
 import os
 import glob
 import argparse
+from datetime import datetime
 from collections import deque
 from dashing import VSplit, HSplit, HGauge, HChart
 from .utils import *
@@ -129,6 +130,8 @@ def main():
     file_path = os.path.join(desktop, 'asitop_'+ str(int(time.time())) +'.log')
     log_file = open(file_path,'w+')
     header = ','.join([
+        'Date',
+        'Time',
         'E_CPU_usage_perc',
         'E_CPU_freq_mhz',
         'P_CPU_usage_perc',
@@ -326,9 +329,12 @@ def main():
 
                     ui.display()
 
-                    # ------------------------------------------------
-                    # ------------------------------------------------
+                    # ----------------------------------------------------------
+                    # ----------------------------------------------------------
+                    dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S").split(' ')
                     row = ','.join([
+                        dt[0],
+                        dt[1],
                         str(cpu_metrics_dict["E-Cluster_active"]),
                         str(cpu_metrics_dict["E-Cluster_active"]),
                         str(cpu_metrics_dict["P-Cluster_active"]),
@@ -358,8 +364,8 @@ def main():
                         '{0:.2f}'.format(gpu_peak_power)
                     ])
                     log_file.write(row + '\n')
-                    # ------------------------------------------------
-                    # ------------------------------------------------
+                    # ----------------------------------------------------------
+                    # ----------------------------------------------------------
 
             time.sleep(args.interval)
 
