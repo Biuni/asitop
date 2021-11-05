@@ -1,5 +1,6 @@
 
 import time
+import os
 import glob
 import argparse
 from collections import deque
@@ -121,6 +122,44 @@ def main():
     avg_gpu_power_list = deque([], maxlen=int(args.avg/args.interval))
 
     clear_console()
+
+    # --------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
+    desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
+    file_path = os.path.join(desktop, 'asitop_'+ str(int(time.time())) +'.log')
+    log_file = open(file_path,'w+')
+    header = ','.join([
+        'E_CPU_usage_perc'
+        'E_CPU_freq_mhz'
+        'P_CPU_usage_perc'
+        'P_CPU_freq_mhz'
+        'GPU_usage_perc'
+        'GPU_freq_mhz'
+        'RAM_usage_gb'
+        'RAM_total_gb'
+        'RAM_free_perc'
+        'SWAP_usage_gb'
+        'SWAP_total_gb'
+        'memory_bandwidth_gb'
+        'E_CPU_read_gb'
+        'E_CPU_write_gb'
+        'P_CPU_read_gb'
+        'P_CPU_write_gb'
+        'GPU_read_gb'
+        'GPU_write_gb'
+        'package_power_w'
+        'package_power_avg_w'
+        'thermal_throttle'
+        'CPU_power_w'
+        'CPU_power_avg_w'
+        'CPU_power_peak_w'
+        'GPU_power_w'
+        'GPU_power_avg_w'
+        'GPU_power_peak_w'
+    ])
+    log_file.write(header + '\n')
+    # --------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     try:
         while True:
@@ -287,10 +326,51 @@ def main():
 
                     ui.display()
 
+                    # ------------------------------------------------
+                    # ------------------------------------------------
+                    row = ','.join([
+                        str(cpu_metrics_dict["E-Cluster_active"]),
+                        str(cpu_metrics_dict["E-Cluster_active"]),
+                        str(cpu_metrics_dict["P-Cluster_active"]),
+                        str(cpu_metrics_dict["P-Cluster_freq_Mhz"]),
+                        str(gpu_metrics_dict["active"]),
+                        str(gpu_metrics_dict["freq_MHz"]),
+                        str(ram_metrics_dict["used_GB"]),
+                        str(ram_metrics_dict["total_GB"]),
+                        str(ram_metrics_dict["free_percent"]),
+                        str(ram_metrics_dict["swap_used_GB"]),
+                        str(ram_metrics_dict["swap_total_GB"]),
+                        '{0:.2f}'.format(total_bw_GB),
+                        '{0:.1f}'.format(ecpu_read_GB),
+                        '{0:.1f}'.format(ecpu_write_GB),
+                        '{0:.1f}'.format(pcpu_read_GB),
+                        '{0:.1f}'.format(pcpu_write_GB),
+                        '{0:.1f}'.format(gpu_read_GB),
+                        '{0:.1f}'.format(gpu_write_GB),
+                        '{0:.2f}'.format(package_power_W),
+                        '{0:.2f}'.format(avg_package_power),
+                        thermal_throttle,
+                        '{0:.2f}'.format(cpu_power_W),
+                        '{0:.2f}'.format(avg_cpu_power),
+                        '{0:.2f}'.format(cpu_peak_power),
+                        '{0:.2f}'.format(gpu_power_W),
+                        '{0:.2f}'.format(avg_gpu_power),
+                        '{0:.2f}'.format(gpu_peak_power)
+                    ])
+                    log_file.write(row + '\n')
+                    # ------------------------------------------------
+                    # ------------------------------------------------
+
             time.sleep(args.interval)
 
     except KeyboardInterrupt:
         pass
+
+    # ---------------
+    # ---------------
+    log_file.close()
+    # ---------------
+    # ---------------
 
     return powermetrics_process
 
