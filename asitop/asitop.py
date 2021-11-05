@@ -129,32 +129,32 @@ def main():
     file_path = os.path.join(desktop, 'asitop_'+ str(int(time.time())) +'.log')
     log_file = open(file_path,'w+')
     header = ','.join([
-        'E_CPU_usage_perc'
-        'E_CPU_freq_mhz'
-        'P_CPU_usage_perc'
-        'P_CPU_freq_mhz'
-        'GPU_usage_perc'
-        'GPU_freq_mhz'
-        'RAM_usage_gb'
-        'RAM_total_gb'
-        'RAM_free_perc'
-        'SWAP_usage_gb'
-        'SWAP_total_gb'
-        'memory_bandwidth_gb'
-        'E_CPU_read_gb'
-        'E_CPU_write_gb'
-        'P_CPU_read_gb'
-        'P_CPU_write_gb'
-        'GPU_read_gb'
-        'GPU_write_gb'
-        'package_power_w'
-        'package_power_avg_w'
-        'thermal_throttle'
-        'CPU_power_w'
-        'CPU_power_avg_w'
-        'CPU_power_peak_w'
-        'GPU_power_w'
-        'GPU_power_avg_w'
+        'E_CPU_usage_perc',
+        'E_CPU_freq_mhz',
+        'P_CPU_usage_perc',
+        'P_CPU_freq_mhz',
+        'GPU_usage_perc',
+        'GPU_freq_mhz',
+        'RAM_usage_gb',
+        'RAM_total_gb',
+        'RAM_free_perc',
+        'SWAP_usage_gb',
+        'SWAP_total_gb',
+        'memory_bandwidth_gb',
+        'E_CPU_read_gb',
+        'E_CPU_write_gb',
+        'P_CPU_read_gb',
+        'P_CPU_write_gb',
+        'GPU_read_gb',
+        'GPU_write_gb',
+        'package_power_w',
+        'package_power_avg_w',
+        'thermal_throttle',
+        'CPU_power_w',
+        'CPU_power_avg_w',
+        'CPU_power_peak_w',
+        'GPU_power_w',
+        'GPU_power_avg_w',
         'GPU_power_peak_w'
     ])
     log_file.write(header + '\n')
